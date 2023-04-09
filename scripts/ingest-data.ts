@@ -13,22 +13,19 @@ const filePath = 'docs/vonage';
 
 export const run = async () => {
   try {
-    /*load raw docs from the all files in the directory */
-    // const directoryLoader = new DirectoryLoader(filePath, {
-    //   '.pdf': (path) => new CustomPDFLoader(path),
-    // });
 
     const directoryLoader = new DirectoryLoader(filePath, {
       '.txt': (path) => new TextLoader(path),
     });
 
-    // const loader = new PDFLoader(filePath);
     const rawDocs = await directoryLoader.load();
 
     /* Split text into chunks */
-    const textSplitter =  new MarkdownTextSplitter();
+    const textSplitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+    });
 
-    //const docs = await textSplitter.splitDocuments(rawDocs);
     const docs = await textSplitter.splitDocuments(rawDocs);
     console.log('split docs', docs);
 
@@ -37,15 +34,9 @@ export const run = async () => {
     const embeddings = new OpenAIEmbeddings();
     const index = pinecone.Index(PINECONE_INDEX_NAME); //change to your own index name
 
-    console.log('Embeding pdf docs...');
-    //embed the PDF documents
+    console.log('Creating embedings for docs...');
 
-    //const batchSize = 10;
-    //const numBatches = Math.ceil(docs.length / batchSize);
-
-    //for (let i = 0; i < numBatches; i++) {
-    //  console.log(`Processing batch ${i} of ${numBatches}`);
-    //  const batchDocs = docs.slice(i * batchSize, (i + 1) * batchSize);
+    //embed the documents
     await PineconeStore.fromDocuments(docs, embeddings, {
       pineconeIndex: index,
       namespace: PINECONE_NAME_SPACE,
