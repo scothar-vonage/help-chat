@@ -1,6 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 docs/text/*
+docs/pdfs/*
+
+!docs/text/.gitkeep
+!docs/pdfs/.gitkeep
 
 # dependencies
 /node_modules
