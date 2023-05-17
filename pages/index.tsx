@@ -280,9 +280,7 @@ export default function Home() {
                     id="userInput"
                     name="userInput"
                     placeholder={
-                      loading
-                        ? 'Waiting for response...'
-                        : 'How can I help?'
+                      loading ? 'Waiting for response...' : 'How can I help?'
                     }
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -318,11 +316,6 @@ export default function Home() {
             )}
           </main>
         </div>
-        <footer className="m-auto p-4">
-          <a href="https://twitter.com/mayowaoshin">
-            Powered by LangChainAI. Demo built by Mayo (Twitter: @mayowaoshin).
-          </a>
-        </footer>
       </Layout>
     </>
   );
