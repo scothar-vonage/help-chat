@@ -9,7 +9,7 @@ import { TextLoader } from "langchain/document_loaders";
 import { MarkdownTextSplitter } from "langchain/text_splitter";
 
 /* Name of directory to retrieve your files from */
-const filePath = 'docs/vonage';
+const filePath = 'docs/vonage/api';
 
 export const run = async () => {
   try {
